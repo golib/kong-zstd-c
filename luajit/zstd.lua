@@ -141,3 +141,25 @@ ffi.C.free(ngResult.data)
 --    local ngDictOutput = zstd.DecompressWithDict(ngDictInput, dictName)
 --    io.write(string.format("Decompressed with dict => %s\n", ffi.string(ngDictOutput)))
 -- until(counter > 10000)
+
+-- for nodict.data
+io.write("\n-- for nodict.data\n")
+local fd = io.open("./luajit/nodict.data", "rb")
+local fileContent = fd:read "*a"
+fd.close()
+
+local fileInput = goStringType(fileContent, #fileContent)
+local fileOutput = zstd.Decompress(fileInput)
+local fileResult = ffi.new("struct GoDecompressResult", fileOutput)
+io.write(string.format("Decompressed without dict output => lua type=%s, ffi type=%s, size=%d\n", type(fileResult.data), ffi.typeof(fileResult.data), tonumber(fileResult.size)))
+io.write(string.format("Decompressed without dict output => %s\n", ffi.string(fileResult.data, fileResult.size)))
+ffi.C.free(fileResult.data)
+
+io.write("\n-- for nodict.data * 2\n")
+local file2Content = fileContent .. fileContent
+local file2Input = goStringType(file2Content, #file2Content)
+local file2Output = zstd.Decompress(file2Input)
+local file2Result = ffi.new("struct GoDecompressResult", file2Output)
+io.write(string.format("Decompressed without dict output => lua type=%s, ffi type=%s, size=%d\n", type(file2Result.data), ffi.typeof(file2Result.data), tonumber(file2Result.size)))
+io.write(string.format("Decompressed without dict output => %s\n", ffi.string(file2Result.data, file2Result.size)))
+ffi.C.free(file2Result.data)
