@@ -34,6 +34,11 @@ libzstd.so: clean-libzstd.so libzstd.a
 	gcc -I./zstd/lib -Wall -Werror -fpic -o lib/kong_$(GOOS_GOARCH).o -c kong_zstd.c
 	gcc -I./lib -shared -o lib/$(LIBZSTD_NAME) lib/base64_$(GOOS_GOARCH).o lib/kong_$(GOOS_GOARCH).o lib/libzstd_$(GOOS_GOARCH).a
 
+fast:
+	gcc -I./zstd/lib -Wall -Werror -fpic -o lib/base64_$(GOOS_GOARCH).o -c base64.c
+	gcc -I./zstd/lib -Wall -Werror -fpic -o lib/kong_$(GOOS_GOARCH).o -c kong_zstd.c
+	gcc -I./lib -shared -o lib/$(LIBZSTD_NAME) lib/base64_$(GOOS_GOARCH).o lib/kong_$(GOOS_GOARCH).o lib/libzstd_$(GOOS_GOARCH).a
+
 update-zstd:
 	rm -rf zstd-tmp
 	git clone --branch $(ZSTD_VERSION) --depth 1 https://github.com/Facebook/zstd zstd-tmp

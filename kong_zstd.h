@@ -86,9 +86,11 @@ extern void ReleaseDict();
 
 extern struct GoCompressResult Compress(GoString src);
 extern struct GoDecompressResult Decompress(GoString dst);
+extern struct GoDecompressResult StreamDecompress(GoString dst);
 
 extern struct GoCompressResult CompressWithDict(GoString src, GoString dict);
 extern struct GoDecompressResult DecompressWithDict(GoString dst, GoString dict);
+extern struct GoDecompressResult StreamDecompressWithDict(GoString dst, GoString dict);
 
 /*! LOGF
  * println logs
