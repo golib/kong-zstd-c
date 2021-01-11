@@ -45,13 +45,17 @@ void free(void *ptr);
 
 extern void EnableDebug();
 extern void DisableDebug();
+
 extern void AddDict(GoString name, GoString filename);
 extern void ReleaseDict();
+
 extern struct GoCompressResult Compress(GoString src);
 extern struct GoDecompressResult Decompress(GoString dst);
+extern struct GoDecompressResult StreamDecompress(GoString dst);
+
 extern struct GoCompressResult CompressWithDict(GoString src, GoString dict);
 extern struct GoDecompressResult DecompressWithDict(GoString dst, GoString dict);
-
+extern struct GoDecompressResult StreamDecompressWithDict(GoString dst, GoString dict);
 ]])
 
 -- define go types
